@@ -1,0 +1,30 @@
+package saborescerrado.jp.tp2.repository;
+
+import java.util.List;
+
+import jakarta.enterprise.context.ApplicationScoped;
+
+import saborescerrado.jp.tp2.model.Usuario;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+
+@ApplicationScoped
+public class UsuarioRepository implements PanacheRepository<Usuario> {
+
+    public List<Usuario> findByNome(String nome) {
+        if (nome == null)
+            return null;
+        return find("UPPER(nome) LIKE ?1", "%" + nome.toUpperCase() + "%").list();
+    }
+
+    public Usuario findByEmail(String email) {
+        if (email == null)
+            return null;
+        return find("email = ?1", email).firstResult();
+    }
+
+    public Usuario findByEmailAndSenha(String email, String senha) {
+        if (email == null || senha == null)
+            return null;
+        return find("email = ?1 AND senha = ?2", email, senha).firstResult();
+    }
+}

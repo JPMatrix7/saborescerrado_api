@@ -1,0 +1,197 @@
+@startuml SaboresCerrado-API
+
+' Estilo do diagrama
+skinparam classAttributeIconSize 0
+skinparam backgroundColor white
+skinparam class {
+    BackgroundColor white
+    ArrowColor #2688d4
+    BorderColor #2688d4
+}
+
+' Pacote de Modelos
+package "model" {
+    ' Usuários
+    class Usuario {
+        -Long id
+        -String nome
+        -String email
+        -String senha
+        -Set<Perfil> perfis
+        -List<Endereco> enderecos
+        -List<Cartao> cartoes
+        -List<Telefone> telefones
+        -List<Licor> favoritos
+        -List<Compra> compras
+    }
+
+    class PessoaFisica {
+        -String cpf
+        -LocalDate dataNascimento
+        -String sobrenome
+    }
+
+    class PessoaJuridica {
+        -String cnpj
+        -String razaoSocial
+        -String nomeFantasia
+    }
+
+    ' Produto Principal
+    class Licor {
+        -Long id
+        -String nome
+        -String descricao
+        -Double preco
+        -Integer estoque
+        -List<String> imagens
+        -List<Avaliacao> avaliacoes
+        -List<Categoria> categorias
+        -Double estrelas
+        -Boolean visivel
+        -Double teorAlcoolico
+        -SafraLicor safra
+        -List<Premiacao> premiacoes
+        -Sabor sabor
+        -List<Ingrediente> ingredientes
+        -Embalagem embalagem
+        -TipoLicor tipo
+    }
+
+    class ParceiroComercial {
+        -Long id
+        -String cnpj
+        -String razaoSocial
+        -String nomeFantasia
+        -String email
+        -String telefone
+        -List<Endereco> enderecos
+    }
+
+    class SafraLicor {
+        -LocalDate anoSafra
+        -String fazenda
+        -String qualidade
+    }
+
+    class Premiacao {
+        -String evento
+        -Integer ano
+        -String medalha
+    }
+
+    class Sabor {
+        -String nome
+    }
+
+    class Ingrediente {
+        -String nome
+        -Double quantidade
+        -String unidadeMedida
+    }
+
+    class Embalagem {
+        -Integer volume
+        -String material
+    }
+
+    ' Compras
+    class Compra {
+        -Long id
+        -LocalDateTime dataCompra
+        -StatusPedido status
+        -FormaPagamento formaPagamento
+        -Double valorTotal
+        -String codigoRastreio
+        -LocalDate dataPrevista
+        -LocalDate dataEntrega
+        -Boolean pago
+    }
+
+    class ItemCompra {
+        -Long id
+        -Integer quantidade
+        -Double precoUnitario
+    }
+
+    ' Localização
+    class Endereco {
+        -Long id
+        -String logradouro
+        -String numero
+        -String complemento
+        -String bairro
+        -String cep
+    }
+
+    class Cidade {
+        -Long id
+        -String nome
+    }
+
+    class Estado {
+        -Long id
+        -String nome
+        -String sigla
+    }
+}
+
+' Enums
+package "enums" {
+    enum TipoLicor {
+        FRUTADO
+        MEL
+    }
+
+    enum Perfil {
+        ADMIN
+        USER
+    }
+
+    enum StatusPedido {
+        PENDENTE
+        APROVADO
+        CANCELADO
+        ENVIADO
+        ENTREGUE
+    }
+
+    enum FormaPagamento {
+        CARTAO
+        PIX
+        BOLETO
+    }
+}
+
+' Relacionamentos
+Usuario <|-- PessoaFisica
+Usuario <|-- PessoaJuridica
+
+Usuario "1" *-- "0..*" Compra
+Usuario "1" *-- "0..*" Endereco
+Usuario "1" *-- "0..*" Telefone
+
+Compra "1" *-- "1..*" ItemCompra
+ItemCompra "0..*" -- "1" Licor
+
+Endereco "0..*" -- "1" Cidade
+Cidade "0..*" -- "1" Estado
+
+Licor "*" -- "1" Sabor
+Licor "*" -- "*" Ingrediente
+Licor "*" -- "1" Embalagem
+Licor "*" -- "1" SafraLicor
+Licor "*" -- "*" Premiacao
+Licor "*" -- "1" ParceiroComercial
+
+SafraLicor "*" -- "1" Cidade
+
+ParceiroComercial "*" -- "*" Endereco
+
+' Relações com Enums
+Licor ..> TipoLicor
+Usuario ..> Perfil
+Compra ..> StatusPedido
+Compra ..> FormaPagamento
+
+@enduml
