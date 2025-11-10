@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.PessoaJuridicaDTO;
 import saborescerrado.jp.tp2.service.PessoaJuridicaService;
 
-@Path("/pessoas-juridicas")
+@Path("/pessoajuridica")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class PessoaJuridicaResource {

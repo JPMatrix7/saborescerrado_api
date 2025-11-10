@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.PremiacaoDTO;
 import saborescerrado.jp.tp2.service.PremiacaoService;
 
-@Path("/premiacoes")
+@Path("/premiacao")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class PremiacaoResource {

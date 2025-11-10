@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.SaborDTO;
 import saborescerrado.jp.tp2.service.SaborService;
 
-@Path("/sabores")
+@Path("/sabor")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class SaborResource {

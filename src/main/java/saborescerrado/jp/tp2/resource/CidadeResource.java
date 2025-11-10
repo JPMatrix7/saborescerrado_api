@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.CidadeDTO;
 import saborescerrado.jp.tp2.service.CidadeService;
 
-@Path("/cidades")
+@Path("/cidade")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CidadeResource {

@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.EnderecoDTO;
 import saborescerrado.jp.tp2.service.EnderecoService;
 
-@Path("/enderecos")
+@Path("/endereco")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EnderecoResource {

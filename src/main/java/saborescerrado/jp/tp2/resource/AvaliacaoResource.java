@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.AvaliacaoDTO;
 import saborescerrado.jp.tp2.service.AvaliacaoService;
 
-@Path("/avaliacoes")
+@Path("/avaliacao")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class AvaliacaoResource {

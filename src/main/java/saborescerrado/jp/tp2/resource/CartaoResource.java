@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.CartaoDTO;
 import saborescerrado.jp.tp2.service.CartaoService;
 
-@Path("/cartoes")
+@Path("/cartao")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CartaoResource {

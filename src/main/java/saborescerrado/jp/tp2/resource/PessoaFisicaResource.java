@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.PessoaFisicaDTO;
 import saborescerrado.jp.tp2.service.PessoaFisicaService;
 
-@Path("/pessoas-fisicas")
+@Path("/pessoafisica")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class PessoaFisicaResource {

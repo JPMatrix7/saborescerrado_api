@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.CompraDTO;
 import saborescerrado.jp.tp2.service.CompraService;
 
-@Path("/compras")
+@Path("/compra")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CompraResource {

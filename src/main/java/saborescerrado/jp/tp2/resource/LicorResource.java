@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.LicorDTO;
 import saborescerrado.jp.tp2.service.LicorService;
 
-@Path("/licores")
+@Path("/licor")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class LicorResource {

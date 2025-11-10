@@ -114,9 +114,9 @@ public class LicorServiceImpl implements LicorService {
         try {
             LOG.info("Requisição Licor.getId()");
             Licor licor = repository.findById(id);
-            if (licor == null || !licor.getAtivo() || !licor.getVisivel())
+            if (licor == null || !licor.getAtivo())
                 return Response.status(Status.NOT_FOUND).build();
-            return Response.ok(licor).build();
+            return Response.ok(toResponseDTO(licor)).build();
         } catch (Exception e) {
             LOG.error("Erro ao rodar Requisição Licor.getId()");
             return Response.status(400).entity(e.getMessage()).build();
@@ -130,7 +130,7 @@ public class LicorServiceImpl implements LicorService {
             Licor licor = repository.findById(id);
             if (licor == null)
                 return Response.status(Status.NOT_FOUND).build();
-            return Response.ok(licor).build();
+            return Response.ok(toResponseDTO(licor)).build();
         } catch (Exception e) {
             LOG.error("Erro ao rodar Requisição Licor.getAdminId()");
             return Response.status(400).entity(e.getMessage()).build();
@@ -258,7 +258,7 @@ public class LicorServiceImpl implements LicorService {
             }
             
             repository.persist(licor);
-            return Response.status(Status.CREATED).entity(licor).build();
+            return Response.status(Status.CREATED).entity(toResponseDTO(licor)).build();
         } catch (Exception e) {
             LOG.error("Erro ao rodar Requisição Licor.insert()");
             return Response.status(400).entity(e.getMessage()).build();
@@ -352,7 +352,7 @@ public class LicorServiceImpl implements LicorService {
                     licor.setParceiroComercial(parceiro);
             }
             
-            return Response.ok(licor).build();
+            return Response.ok(toResponseDTO(licor)).build();
         } catch (Exception e) {
             LOG.error("Erro ao rodar Requisição Licor.update()");
             return Response.status(400).entity(e.getMessage()).build();

@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.CategoriaDTO;
 import saborescerrado.jp.tp2.service.CategoriaService;
 
-@Path("/categorias")
+@Path("/categoria")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CategoriaResource {

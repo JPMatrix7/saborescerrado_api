@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.EmbalagemDTO;
 import saborescerrado.jp.tp2.service.EmbalagemService;
 
-@Path("/embalagens")
+@Path("/embalagem")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EmbalagemResource {

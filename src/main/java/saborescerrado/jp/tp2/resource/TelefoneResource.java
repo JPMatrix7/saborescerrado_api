@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.TelefoneDTO;
 import saborescerrado.jp.tp2.service.TelefoneService;
 
-@Path("/telefones")
+@Path("/telefone")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class TelefoneResource {

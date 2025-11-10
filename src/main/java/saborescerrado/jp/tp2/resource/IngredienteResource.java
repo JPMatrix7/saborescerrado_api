@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.IngredienteDTO;
 import saborescerrado.jp.tp2.service.IngredienteService;
 
-@Path("/ingredientes")
+@Path("/ingrediente")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class IngredienteResource {

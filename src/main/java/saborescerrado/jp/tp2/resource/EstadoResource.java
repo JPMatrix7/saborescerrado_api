@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.EstadoDTO;
 import saborescerrado.jp.tp2.service.EstadoService;
 
-@Path("/estados")
+@Path("/estado")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EstadoResource {

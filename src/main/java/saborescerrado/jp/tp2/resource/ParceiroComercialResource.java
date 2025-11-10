@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.ParceiroComercialDTO;
 import saborescerrado.jp.tp2.service.ParceiroComercialService;
 
-@Path("/parceiros")
+@Path("/parceirocomercial")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ParceiroComercialResource {
