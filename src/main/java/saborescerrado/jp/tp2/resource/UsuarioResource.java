@@ -97,6 +97,14 @@ public class UsuarioResource {
         return usuarioService.updateNome(id, nome);
     }
 
+    @PATCH
+    @PermitAll
+    @Path("/perfis/{id}")
+    @Transactional
+    public UsuarioResponseDTO updatePerfis(@PathParam("id") Long id, UsuarioUpdatePerfisDTO perfis){
+        return usuarioService.updatePerfis(id, perfis);
+    }
+
     @PUT
     @PermitAll
     @Path("/{id}")

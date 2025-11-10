@@ -1,6 +1,7 @@
 package saborescerrado.jp.tp2.resource;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -52,13 +53,13 @@ public class TelefoneResource {
     }
 
     @POST
-    public Response insert(TelefoneDTO telefoneDTO) {
+    public Response insert(@Valid TelefoneDTO telefoneDTO) {
         return telefoneService.insert(telefoneDTO);
     }
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, TelefoneDTO telefoneDTO) {
+    public Response update(@PathParam("id") Long id, @Valid TelefoneDTO telefoneDTO) {
         return telefoneService.update(id, telefoneDTO);
     }
 

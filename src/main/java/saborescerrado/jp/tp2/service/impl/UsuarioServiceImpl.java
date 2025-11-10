@@ -18,6 +18,7 @@ import saborescerrado.jp.tp2.dto.UsuarioResponseDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateEmailDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateLoginDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateNomeDTO;
+import saborescerrado.jp.tp2.dto.UsuarioUpdatePerfisDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateSenhaDTO;
 import saborescerrado.jp.tp2.model.Cartao;
 import saborescerrado.jp.tp2.model.Endereco;
@@ -219,6 +220,20 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new RuntimeException("Usuário não encontrado");
         
         usuario.setNome(nome.nome());
+        return toResponseDTO(usuario);
+    }
+
+    @Override
+    @Transactional
+    public UsuarioResponseDTO updatePerfis(Long id, UsuarioUpdatePerfisDTO perfisDTO) {
+        LOG.info("Requisição Usuario.updatePerfis()");
+        Usuario usuario = repository.findById(id);
+        if (usuario == null)
+            throw new RuntimeException("Usuário não encontrado");
+        
+        if (perfisDTO.perfis() != null && !perfisDTO.perfis().isEmpty()) {
+            usuario.setPerfis(new HashSet<>(perfisDTO.perfis()));
+        }
         return toResponseDTO(usuario);
     }
 

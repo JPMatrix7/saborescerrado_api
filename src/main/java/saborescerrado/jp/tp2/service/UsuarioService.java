@@ -9,6 +9,7 @@ import saborescerrado.jp.tp2.dto.UsuarioResponseDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateEmailDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateLoginDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateNomeDTO;
+import saborescerrado.jp.tp2.dto.UsuarioUpdatePerfisDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateSenhaDTO;
 
 public interface UsuarioService {
@@ -30,6 +31,8 @@ public interface UsuarioService {
     public UsuarioResponseDTO updateLogin(Long id, UsuarioUpdateLoginDTO login);
 
     public UsuarioResponseDTO updateNome(Long id, UsuarioUpdateNomeDTO nome);
+
+    public UsuarioResponseDTO updatePerfis(Long id, UsuarioUpdatePerfisDTO perfis);
 
     public Response update(Long id, PessoaFisicaDTO dto);
 
