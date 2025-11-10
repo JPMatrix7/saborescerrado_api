@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
 import saborescerrado.jp.tp2.dto.PessoaFisicaDTO;
+import saborescerrado.jp.tp2.dto.PessoaFisicaUpdateDTO;
 import saborescerrado.jp.tp2.dto.UsuarioResponseDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateEmailDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateLoginDTO;
@@ -34,7 +35,7 @@ public interface UsuarioService {
 
     public UsuarioResponseDTO updatePerfis(Long id, UsuarioUpdatePerfisDTO perfis);
 
-    public Response update(Long id, PessoaFisicaDTO dto);
+    public Response update(Long id, PessoaFisicaUpdateDTO dto);
 
     public Response delete(Long id);
 

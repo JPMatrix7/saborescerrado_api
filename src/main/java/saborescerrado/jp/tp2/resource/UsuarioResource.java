@@ -1,6 +1,7 @@
 package saborescerrado.jp.tp2.resource;
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
@@ -17,6 +18,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import saborescerrado.jp.tp2.dto.*;
+import saborescerrado.jp.tp2.model.Perfil;
 import saborescerrado.jp.tp2.service.UsuarioService;
 
 @Path("/usuario")
@@ -101,15 +103,15 @@ public class UsuarioResource {
     @PermitAll
     @Path("/perfis/{id}")
     @Transactional
-    public UsuarioResponseDTO updatePerfis(@PathParam("id") Long id, UsuarioUpdatePerfisDTO perfis){
-        return usuarioService.updatePerfis(id, perfis);
+    public UsuarioResponseDTO updatePerfis(@PathParam("id") Long id, Set<Perfil> perfis){
+        return usuarioService.updatePerfis(id, new UsuarioUpdatePerfisDTO(perfis));
     }
 
     @PUT
     @PermitAll
     @Path("/{id}")
     @Transactional
-    public Response update(@PathParam("id") Long id, PessoaFisicaDTO dto){
+    public Response update(@PathParam("id") Long id, PessoaFisicaUpdateDTO dto){
         return usuarioService.update(id, dto);
     }
 

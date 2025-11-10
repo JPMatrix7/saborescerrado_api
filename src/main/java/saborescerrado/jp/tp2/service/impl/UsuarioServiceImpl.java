@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jboss.logging.Logger;
@@ -14,6 +15,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import saborescerrado.jp.tp2.dto.PessoaFisicaDTO;
+import saborescerrado.jp.tp2.dto.PessoaFisicaUpdateDTO;
 import saborescerrado.jp.tp2.dto.UsuarioResponseDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateEmailDTO;
 import saborescerrado.jp.tp2.dto.UsuarioUpdateLoginDTO;
@@ -101,9 +103,16 @@ public class UsuarioServiceImpl implements UsuarioService {
             Usuario usuario = repository.findById(id);
             if (usuario == null || !usuario.getAtivo())
                 return Response.status(Status.NOT_FOUND).build();
+            
+            // Se for PessoaFisica, retornar DTO completo com CPF e dataNascimento
+            if (usuario instanceof PessoaFisica) {
+                PessoaFisica pessoaFisica = (PessoaFisica) usuario;
+                return Response.ok(saborescerrado.jp.tp2.dto.PessoaFisicaResponseDTO.valueOf(pessoaFisica)).build();
+            }
+            
             return Response.ok(toResponseDTO(usuario)).build();
         } catch (Exception e) {
-            LOG.error("Erro ao rodar Requisição Usuario.getId()");
+            LOG.error("Erro ao rodar Requisição Usuario.getId(): " + e.getMessage());
             return Response.status(400).entity(e.getMessage()).build();
         }
     }
@@ -118,12 +127,17 @@ public class UsuarioServiceImpl implements UsuarioService {
             pessoaFisica.setNome(p.nome());
             pessoaFisica.setEmail(p.email());
             pessoaFisica.setSenha(p.senha()); // Em produção, fazer hash da senha
-            pessoaFisica.setCpf(p.cpf());
+            pessoaFisica.setCpf(p.cpf().replaceAll("[^0-9]", "")); // Remove formatação do CPF
             pessoaFisica.setDataNascimento(p.dataNascimento());
             pessoaFisica.setSobrenome(p.sobrenome());
             
+            // Define perfis (padrão USER se não informado)
             if (p.perfis() != null && !p.perfis().isEmpty()) {
                 pessoaFisica.setPerfis(new HashSet<>(p.perfis()));
+            } else {
+                Set<saborescerrado.jp.tp2.model.Perfil> perfisDefault = new HashSet<>();
+                perfisDefault.add(saborescerrado.jp.tp2.model.Perfil.USER);
+                pessoaFisica.setPerfis(perfisDefault);
             }
             
             if (p.enderecosIds() != null) {
@@ -239,7 +253,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public Response update(Long id, PessoaFisicaDTO dto) {
+    public Response update(Long id, PessoaFisicaUpdateDTO dto) {
         try {
             LOG.info("Requisição Usuario.update()");
             Usuario usuario = repository.findById(id);
@@ -254,62 +268,25 @@ public class UsuarioServiceImpl implements UsuarioService {
             
             if (dto.nome() != null && !dto.nome().isEmpty())
                 pessoaFisica.setNome(dto.nome());
-            if (dto.email() != null && !dto.email().isEmpty())
-                pessoaFisica.setEmail(dto.email());
-            if (dto.senha() != null && !dto.senha().isEmpty())
-                pessoaFisica.setSenha(dto.senha()); // Em produção, fazer hash da senha
-            if (dto.cpf() != null && !dto.cpf().isEmpty())
-                pessoaFisica.setCpf(dto.cpf());
-            if (dto.dataNascimento() != null)
-                pessoaFisica.setDataNascimento(dto.dataNascimento());
             if (dto.sobrenome() != null && !dto.sobrenome().isEmpty())
                 pessoaFisica.setSobrenome(dto.sobrenome());
+            if (dto.email() != null && !dto.email().isEmpty())
+                pessoaFisica.setEmail(dto.email());
+            
+            // Senha é opcional no update
+            if (dto.senha() != null && !dto.senha().isEmpty())
+                pessoaFisica.setSenha(dto.senha()); // Em produção, fazer hash da senha
+                
+            if (dto.cpf() != null && !dto.cpf().isEmpty())
+                pessoaFisica.setCpf(dto.cpf().replaceAll("[^0-9]", "")); // Remove formatação
+            if (dto.dataNascimento() != null)
+                pessoaFisica.setDataNascimento(dto.dataNascimento());
             
             if (dto.perfis() != null && !dto.perfis().isEmpty()) {
                 pessoaFisica.setPerfis(new HashSet<>(dto.perfis()));
             }
             
-            if (dto.enderecosIds() != null) {
-                List<Endereco> enderecos = new ArrayList<>();
-                for (Long enderecoId : dto.enderecosIds()) {
-                    Endereco endereco = enderecoRepository.findById(enderecoId);
-                    if (endereco != null)
-                        enderecos.add(endereco);
-                }
-                pessoaFisica.setEnderecos(enderecos);
-            }
-            
-            if (dto.cartoesIds() != null) {
-                List<Cartao> cartoes = new ArrayList<>();
-                for (Long cartaoId : dto.cartoesIds()) {
-                    Cartao cartao = cartaoRepository.findById(cartaoId);
-                    if (cartao != null)
-                        cartoes.add(cartao);
-                }
-                pessoaFisica.setCartoes(cartoes);
-            }
-            
-            if (dto.telefonesIds() != null) {
-                List<Telefone> telefones = new ArrayList<>();
-                for (Long telefoneId : dto.telefonesIds()) {
-                    Telefone telefone = telefoneRepository.findById(telefoneId);
-                    if (telefone != null)
-                        telefones.add(telefone);
-                }
-                pessoaFisica.setTelefones(telefones);
-            }
-            
-            if (dto.favoritosIds() != null) {
-                List<Licor> favoritos = new ArrayList<>();
-                for (Long licorId : dto.favoritosIds()) {
-                    Licor licor = licorRepository.findById(licorId);
-                    if (licor != null)
-                        favoritos.add(licor);
-                }
-                pessoaFisica.setFavoritos(favoritos);
-            }
-            
-            return Response.ok(toResponseDTO(pessoaFisica)).build();
+            return Response.noContent().build();
         } catch (Exception e) {
             LOG.error("Erro ao rodar Requisição Usuario.update(): " + e.getMessage());
             return Response.status(400).entity(e.getMessage()).build();

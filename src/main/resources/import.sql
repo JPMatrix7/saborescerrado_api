@@ -142,6 +142,15 @@ INSERT INTO pessoajuridica (id, cnpj, razaosocial, nomefantasia)
 VALUES (5, '12.345.678/0001-90', 'Sabores do Cerrado Comércio de Bebidas Ltda', 'Sabores do Cerrado'),
        (6, '98.765.432/0001-11', 'Distribuidora Premium de Bebidas ME', 'Premium Distribuidora');
 
+-- Perfis dos Usuários (0=USER, 1=ADMIN)
+INSERT INTO usuario_perfil (usuario_id, perfis)
+VALUES (1, 0),
+       (2, 0),
+       (3, 1),
+       (4, 0),
+       (5, 1),
+       (6, 0);
+
 -- Telefones (codigoArea, numero - SEM usuario pois não há @JoinColumn)
 INSERT INTO telefone (codigoarea, numero, ativo, datainclusao)
 VALUES ('63', '98888-1111', true, CURRENT_TIMESTAMP),
